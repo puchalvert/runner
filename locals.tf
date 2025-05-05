@@ -72,7 +72,7 @@ locals {
   }
   
   # Script de instalación del runner con explicaciones detalladas
-  runner_install_script = var.auto_install_runner ? templatefile("${path.module}/templates/install_runner.sh.tpl", {
+  runner_install_script = var.auto_install_runner ? templatefile("${path.module}/modules/runner/templates/user_data.sh", {
     github_repo   = var.github_repo
     github_token  = var.github_token
     runner_labels = var.runner_labels

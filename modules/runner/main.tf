@@ -33,7 +33,7 @@ resource "aws_instance" "github_runner" {
   
   # Script de inicialización que se ejecuta al lanzar la instancia
   # Si auto_install_runner es falso, el script será mínimo
-  user_data = var.auto_install_runner ? templatefile("${path.module}/templates/user_data.sh.tpl", {
+  user_data = var.auto_install_runner ? templatefile("${path.module}/templates/user_data.sh", {
     github_repo   = var.github_repo
     github_token  = var.github_token
     runner_labels = var.runner_labels

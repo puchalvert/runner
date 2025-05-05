@@ -10,7 +10,7 @@
 variable "aws_region" {
   description = "Región de AWS donde se desplegará la infraestructura"
   type        = string
-  default     = "us-east-1"
+  default     = "us-east-2"
 }
 
 variable "environment" {
@@ -23,11 +23,11 @@ variable "environment" {
 variable "instance_type" {
   description = "Tipo de instancia EC2 para el runner"
   type        = string
-  default     = "t3.medium"
+  default     = "t2.micro"
   
   validation {
-    condition     = contains(["t3.micro", "t3.small", "t3.medium", "t3.large", "m5.large"], var.instance_type)
-    error_message = "El tipo de instancia debe ser uno de los admitidos: t3.micro, t3.small, t3.medium, t3.large, m5.large."
+    condition     = contains(["t2.micro", "t3.micro", "t3.small", "t3.medium", "t3.large", "m5.large"], var.instance_type)
+    error_message = "El tipo de instancia debe ser uno de los admitidos: t2.micro, t3.micro, t3.small, t3.medium, t3.large, m5.large."
   }
 }
 

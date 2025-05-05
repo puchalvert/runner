@@ -25,7 +25,7 @@ resource "aws_security_group" "runner_sg" {
     to_port     = 22
     protocol    = "tcp"
     cidr_blocks = [var.ssh_ingress_cidr]
-    description = "Acceso SSH para administración"
+    description = "Acceso SSH para administracion"
   }
 
   # Regla de salida para permitir todo el tráfico saliente
@@ -35,7 +35,7 @@ resource "aws_security_group" "runner_sg" {
     to_port     = 0
     protocol    = "-1"  # Cualquier protocolo
     cidr_blocks = ["0.0.0.0/0"]
-    description = "Permite todo el tráfico saliente"
+    description = "Permite todo el trafico saliente"
   }
 
   tags = {
