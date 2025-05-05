@@ -1,0 +1,55 @@
+name: Terraform AWS EC2 Deployment
+
+on:
+  push:
+    branches:
+      - master
+
+permissions:
+  id-token: write
+  contents: read
+  
+   
+jobs:
+  deploy:
+    runs-on: self-hosted
+    environment: production  # Configura un entorno en GitHub (opcional)
+
+    steps:
+      # Paso 1: Descargar el código
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Paso 2: Instalar Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.6.6"  # Usa tu versión
+
+      # Configure AWS credentials
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          
+          aws-region: us-east-2
+          role-to-assume: "arn:aws:iam::209479295186:role/github_actions_puchalvert_pipeline"
+          role-duration-seconds: 3600
+          role-session-name: "GitHubActions"          
+        
+      # Paso 3: Inicializar Terraform
+      - name: Terraform Init
+        run: terraform init
+        
+      # Paso 4: Validar sintaxis
+      - name: Terraform Validate
+        run: terraform validate
+
+      # Paso 5: Planificar cambios
+      - name: Terraform Plan
+        run: terraform plan -input=false
+        
+      # Paso 6: Aplicar cambios (solo en rama master)
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/master'
+        run: terraform apply -auto-approve -input=false
+        
