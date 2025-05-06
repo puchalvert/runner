@@ -37,3 +37,9 @@ variable "project_name" {
   type        = string
   default     = "github-runner"
 }
+
+variable "common_tags" {
+  description = "Etiquetas comunes para todos los recursos"
+  type        = map(string)
+  default     = {}
+}

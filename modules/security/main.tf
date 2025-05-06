@@ -38,9 +38,10 @@ resource "aws_security_group" "runner_sg" {
     description = "Permite todo el trafico saliente"
   }
 
-  tags = {
+  tags = merge (var.common_tags, {
     Name = "${var.project_name}-sg"
   }
+  )
 }
 
 # Par de claves SSH para acceder a la instancia
@@ -49,9 +50,10 @@ resource "aws_key_pair" "runner_key" {
   key_name   = "${var.project_name}-key"
   public_key = var.ssh_public_key
 
-  tags = {
+  tags = merge (var.common_tags, {
     Name = "${var.project_name}-key"
   }
+  )
 }
 
 # Rol IAM para el runner
@@ -74,9 +76,10 @@ resource "aws_iam_role" "runner_role" {
     ]
   })
 
-  tags = {
+  tags = merge (var.common_tags, {
     Name = "${var.project_name}-role"
   }
+  )
 }
 
 # Política base para el runner

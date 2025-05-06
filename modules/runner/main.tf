@@ -68,9 +68,10 @@ resource "aws_instance" "github_runner" {
     # Rendimiento de transferencia en MiB/s para gp3
     throughput = 125
     
-    tags = {
+    tags = merge (var.common_tags, {
       Name = "${var.project_name}-root-volume"
     }
+    )
   }
 
   # Opciones de monitoreo detallado de CloudWatch
@@ -80,12 +81,13 @@ resource "aws_instance" "github_runner" {
   instance_initiated_shutdown_behavior = "terminate"
 
   # Etiquetas para la instancia
-  tags = {
+  tags = merge (var.common_tags, {
     Name = "${var.project_name}-instance"
     Role = "GitHub Actions Runner"
     Repository = var.github_repo
     Labels = var.runner_labels
   }
+  )
   
   # Esperar a que la instancia esté disponible antes de continuar
   lifecycle {
@@ -110,9 +112,10 @@ resource "aws_ebs_volume" "runner_data" {
   # Cifrado del volumen
   encrypted = true
   
-  tags = {
+  tags = merge (var.common_tags, {
     Name = "${var.project_name}-data-volume"
   }
+  )
 }
 
 # Adjuntar el volumen EBS adicional a la instancia si existe

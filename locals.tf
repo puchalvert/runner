@@ -22,7 +22,7 @@ locals {
     Environment = local.environment
     ManagedBy   = "Terraform"
     GitHubRepo  = var.github_repo
-    CreatedAt   = timestamp()
+    # CreatedAt   = timestamp()
   }
 
   # Configuración de la red

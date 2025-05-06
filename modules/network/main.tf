@@ -23,9 +23,10 @@ resource "aws_vpc" "runner_vpc" {
   # Habilita la resolución DNS dentro de la VPC
   enable_dns_support = true
 
-  tags = {
+  tags = merge(var.common_tags, {
     Name = "${var.project_name}-vpc"
   }
+  )
 }
 
 # Subred pública dentro de la VPC
@@ -43,9 +44,10 @@ resource "aws_subnet" "runner_subnet" {
   # Zona de disponibilidad donde se ubicará esta subred
   availability_zone = var.availability_zone
 
-  tags = {
+  tags = merge(var.common_tags, {
     Name = "${var.project_name}-subnet"
   }
+  )
 }
 
 # Internet Gateway para permitir comunicación entre la VPC e Internet
@@ -54,9 +56,10 @@ resource "aws_internet_gateway" "runner_igw" {
   # VPC a la que se conectará este Internet Gateway
   vpc_id = aws_vpc.runner_vpc.id
 
-  tags = {
+  tags = merge (var.common_tags, {
     Name = "${var.project_name}-igw"
   }
+  )
 }
 
 # Tabla de rutas para dirigir el tráfico de red
@@ -71,9 +74,10 @@ resource "aws_route_table" "runner_rtb" {
     gateway_id = aws_internet_gateway.runner_igw.id
   }
 
-  tags = {
+  tags = merge (var.common_tags, {
     Name = "${var.project_name}-rtb"
   }
+  )
 }
 
 # Asociación entre la subred y la tabla de rutas

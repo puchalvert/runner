@@ -11,14 +11,14 @@
  */
 
 # Configuración del proveedor de AWS
-# provider "aws" {
-#   region = var.aws_region
+provider "aws" {
+  region = var.aws_region
   
   # Recomendado: añadir tags por defecto para todos los recursos
-#   default_tags {
-#     tags = local.common_tags
-#   }
-# }
+  default_tags {
+    tags = local.common_tags
+  }
+}
 
 # Módulo de red: Crea la infraestructura de red necesaria
 module "network" {

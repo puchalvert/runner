@@ -88,3 +88,10 @@ variable "runner_group" {
   type        = string
   default     = "ec2-user"
 }
+
+variable "common_tags" {
+  description = "Etiquetas comunes para todos los recursos"
+  type        = map(string)
+  default     = {}
+}
+
